@@ -5,20 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>视频展示页面</title>
     <style>
-        /* 视频容器：控制每行数量和间距 */
         .video-container {
             width: 90%;
             margin: 20px auto;
             display: flex;
             flex-wrap: wrap;
-            gap: 2%; /* 视频卡片之间的间距 */
+            gap: 2%;
         }
-        /* 视频卡片：每行4个，计算宽度 25% - 间距 */
         .video-card {
             width: 23%;
             margin-bottom: 20px;
         }
-        /* 视频样式：铺满卡片 */
         .video-card video {
             width: 100%;
             height: 200px;
@@ -26,7 +23,6 @@
             border-radius: 8px;
             border: 1px solid #ddd;
         }
-        /* 标题样式 */
         .video-card h4 {
             margin: 10px 0 0 0;
             font-size: 16px;
@@ -36,7 +32,6 @@
 </head>
 <body>
     <div class="video-container">
-        <!-- 第一个视频：已替换为指定链接 -->
         <div class="video-card">
             <video controls>
                 <source src="https://202417001.github.io/1/32.mp4" type="video/mp4">
@@ -44,7 +39,6 @@
             </video>
             <h4>斯老师好想谈恋爱</h4>
         </div>
-        <!-- 视频卡片2 -->
         <div class="video-card">
             <video controls>
                 <source src="video2.mp4" type="video/mp4">
@@ -52,7 +46,6 @@
             </video>
             <h4>视频标题2</h4>
         </div>
-        <!-- 视频卡片3 -->
         <div class="video-card">
             <video controls>
                 <source src="video3.mp4" type="video/mp4">
@@ -60,7 +53,6 @@
             </video>
             <h4>视频标题3</h4>
         </div>
-        <!-- 视频卡片4 -->
         <div class="video-card">
             <video controls>
                 <source src="video4.mp4" type="video/mp4">
@@ -68,7 +60,6 @@
             </video>
             <h4>视频标题4</h4>
         </div>
-        <!-- 视频卡片5（自动换行到下一行） -->
         <div class="video-card">
             <video controls>
                 <source src="video5.mp4" type="video/mp4">
