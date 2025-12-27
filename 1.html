@@ -41,7 +41,6 @@
             text-overflow: ellipsis;
             padding: 0 5px;
         }
-        /* 平板屏幕：一行2个视频 */
         @media (max-width: 768px) {
             .video-card {
                 width: 48%;
@@ -50,7 +49,6 @@
                 height: 140px;
             }
         }
-        /* 手机屏幕：一行1个视频 */
         @media (max-width: 480px) {
             .video-card {
                 width: 100%;
@@ -63,19 +61,19 @@
 </head>
 <body>
     <div class="video-container">
-        <div class="video-card" onclick="window.open('2.html', '_blank')">
+        <div class="video-card" onclick="window.location.href = '2.html'">
             <img src="https://picsum.photos/400/225?random=1" alt="封面">
             <h4>视频标题1</h4>
         </div>
-        <div class="video-card" onclick="window.open('https://202417001.github.io/1/play.html', '_blank')">
+        <div class="video-card" onclick="window.location.href = 'https://202417001.github.io/1/play.html'">
             <img src="https://picsum.photos/400/225?random=2" alt="封面">
             <h4>视频标题2</h4>
         </div>
-        <div class="video-card" onclick="window.open('https://202417001.github.io/1/play.html', '_blank')">
+        <div class="video-card" onclick="window.location.href = 'https://202417001.github.io/1/play.html'">
             <img src="https://picsum.photos/400/225?random=3" alt="封面">
             <h4>视频标题3</h4>
         </div>
-        <div class="video-card" onclick="window.open('https://202417001.github.io/1/play.html', '_blank')">
+        <div class="video-card" onclick="window.location.href = 'https://202417001.github.io/1/play.html'">
             <img src="https://picsum.photos/400/225?random=4" alt="封面">
             <h4>视频标题4</h4>
         </div>
