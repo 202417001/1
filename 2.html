@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频播放</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .play-container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        video {
+            width: 100%;
+            height: 600px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .speed-control {
+            margin-top: 10px;
+            padding: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="play-container">
+        <a href="index.html" class="back-btn">返回视频列表</a>
+        <video id="videoPlayer" controls></video>
+        <select class="speed-control" id="speedSelect">
+            <option value="0.5">0.5倍速</option>
+            <option value="1" selected>1倍速</option>
+            <option value="1.5">1.5倍速</option>
+            <option value="2">2倍速</option>
+        </select>
+    </div>
+    <script>
+        const videoPlayer = document.getElementById('videoPlayer');
+        const speedSelect = document.getElementById('speedSelect');
+        videoPlayer.src = "https://202417001.github.io/1/32.mp4";
+        
+        speedSelect.addEventListener('change', function() {
+            videoPlayer.playbackRate = this.value;
+        });
+    </script>
+</body>
+</html>
