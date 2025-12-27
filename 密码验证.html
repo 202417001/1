@@ -3,33 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>密码验证</title>
-</head>
-<body>
-    <h3>请输入密码</h3>
-    <form onsubmit="checkPassword(); return false;">
-        <input type="password" id="passwordInput" placeholder="请输入密码">
-        <button type="submit">提交验证</button>
-    </form>
-
-    <script>
-        function checkPassword() {
-            var inputPwd = document.getElementById("passwordInput").value;
-            var correctPwd = "202417";
-            
-            if (inputPwd === "") {
-                alert("密码不能为空，请输入密码！");
-                return;
+    <title>视频列表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            padding: 10px;
+            font-family: Arial, sans-serif;
+        }
+        .video-container {
+            width: 95%;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2%;
+        }
+        .video-card {
+            width: 23%;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .video-card:hover {
+            transform: scale(1.02);
+        }
+        .video-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .video-card h4 {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 5px;
+        }
+        /* 密码弹窗遮罩层 */
+        .pwd-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        /* 密码弹窗容器 */
+        .pwd-popup {
+            width: 90%;
+            max-width: 350px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        /* 抖动动画关键帧 */
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            20%, 60% {transform: translateX(-5px);}
+            40%, 80% {transform: translateX(5px);}
+        }
+        /* 抖动动画类 */
+        .shake-animation {
+            animation: shake 0.4s linear;
+        }
+        .pwd-popup h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .pwd-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+        .pwd-input:focus {
+            border-color: #007bff;
+        }
+        .pwd-input.error {
+            border-color: #dc3545;
+        }
+        .pwd-btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        .pwd-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .confirm-btn {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .cancel-btn {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .video-card {
+                width: 48%;
             }
-
-            if (inputPwd === correctPwd) {
-                window.location.href = "https://202417001.github.io/1/1.html";
-            } else {
-                alert("密码错误，请重新输入！");
-                // 清空输入框，方便重新输入
-                document.getElementById("passwordInput").value = "";
+            .video-card img {
+                height: 140px;
             }
         }
+        @media (max-width: 480px) {
+            .video-card {
+                width: 100%;
+            }
+            .video-card img {
+                height: 200px;
+            }
+            .pwd-popup {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <div class="video-card" onclick="showPwdPopup('2.html')">
+            <img src="https://picsum.photos/400/225?random=1" alt="封面">
+            <h4>视频标题1</h4>
+        </div>
+        <div class="video-card" onclick="showPwdPopup('https://202417001.github.io/1/play.html')">
+            <img src="https://picsum.photos/400/225?random=2" alt="封面">
+            <h4>视频标题2</h4>
+        </div>
+        <div class="video-card" onclick="showPwdPopup('https://202417001.github.io/1/play.html')">
+            <img src="https://picsum.photos/400/225?random=3" alt="封面">
+            <h4>视频标题3</h4>
+        </div>
+        <div class="video-card" onclick="showPwdPopup('https://202417001.github.io/1/play.html')">
+            <img src="https://picsum.photos/400/225?random=4" alt="封面">
+            <h4>视频标题4</h4>
+        </div>
+    </div>
+
+    <!-- 密码弹窗 -->
+    <div class="pwd-mask" id="pwdMask">
+        <div class="pwd-popup" id="pwdPopup">
+            <h3>请输入访问密码</h3>
+            <input type="password" class="pwd-input" id="pwdInput" placeholder="在此输入密码">
+            <div class="pwd-btn-group">
+                <button class="pwd-btn confirm-btn" onclick="verifyPassword()">确认</button>
+                <button class="pwd-btn cancel-btn" onclick="hidePwdPopup()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 存储要跳转的地址
+        let targetUrl = "";
+        // 自定义正确密码
+        const correctPwd = "202417";
+        const pwdPopup = document.getElementById("pwdPopup");
+        const pwdInput = document.getElementById("pwdInput");
+
+        // 显示密码弹窗
+        function showPwdPopup(url) {
+            targetUrl = url;
+            document.getElementById("pwdMask").style.display = "flex";
+            pwdInput.value = "";
+            pwdInput.classList.remove("error");
+        }
+
+        // 隐藏密码弹窗
+        function hidePwdPopup() {
+            document.getElementById("pwdMask").style.display = "none";
+            targetUrl = "";
+            pwdInput.classList.remove("error");
+        }
+
+        // 验证密码
+        function verifyPassword() {
+            const inputPwd = pwdInput.value.trim();
+            if (inputPwd === correctPwd) {
+                window.location.href = targetUrl;
+                hidePwdPopup();
+            } else {
+                // 添加抖动动画和输入框红色边框
+                pwdPopup.classList.add("shake-animation");
+                pwdInput.classList.add("error");
+                // 动画结束后移除类名，方便下次触发
+                setTimeout(() => {
+                    pwdPopup.classList.remove("shake-animation");
+                }, 400);
+                alert("密码错误，请重新输入！");
+                pwdInput.value = "";
+            }
+        }
+
+        // 按回车键触发验证
+        pwdInput.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                verifyPassword();
+            }
+        });
     </script>
 </body>
 </html>
